@@ -26,9 +26,17 @@ public class Hero : MonoBehaviour {
         float yAxis = Input.GetAxis("Vertical");
 
         Vector3 pos = transform.position;
-        pos.x += xAxis * speed * Time.deltaTime;
-        pos.y += yAxis * speed * Time.deltaTime;
-        transform.position = pos;
+
+        //removes extra speed when moving diagonally
+        if ((yAxis > 0 && xAxis > 0) || (yAxis < 0 && xAxis > 0) || (yAxis > 0 && xAxis < 0) || (yAxis < 0 && xAxis < 0)) {
+            pos.x += (xAxis * speed * Time.deltaTime) / 1.4f;
+            pos.y += (yAxis * speed * Time.deltaTime) / 1.4f;
+            transform.position = pos;
+        } else {
+            pos.x += xAxis * speed * Time.deltaTime;
+            pos.y += yAxis * speed * Time.deltaTime;
+            transform.position = pos;
+        }
         
         bounds.center = transform.position;
 
