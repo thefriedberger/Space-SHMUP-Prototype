@@ -1,16 +1,20 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+public enum BoundsTest {
+    center,
+    onScreen,
+    offScreen
+}
 public class Utils : MonoBehaviour {
 
 
     public static Bounds BoundsUnion (Bounds b0, Bounds b1) {
-        if (b0.size == Vector3.zero && b1.size == Vector3.zero) {
+        if (b0.size == Vector3.zero && b1.size != Vector3.zero) {
             return (b1);
         } else if (b0.size != Vector3.zero && b1.size == Vector3.zero) {
             return (b0);
-        } else if (b0.size == Vector3.zero && b1.size != Vector3.zero) {
+        } else if (b0.size == Vector3.zero && b1.size == Vector3.zero) {
             return (b0);
         }
 
@@ -63,5 +67,88 @@ public class Utils : MonoBehaviour {
 
         _camBounds.Encapsulate(boundTLN);
         _camBounds.Encapsulate(boundBRF);
+    }
+
+    public static Vector3 ScreenBoundsCheck (Bounds bnd, BoundsTest test = BoundsTest.center) {
+        return (BoundsInBoundsCheck(camBounds, bnd, test));
+    }
+
+    public static Vector3 BoundsInBoundsCheck(Bounds bigB, Bounds lilB, BoundsTest test = BoundsTest.onScreen) {
+        Vector3 pos = lilB.center;
+
+        Vector3 off = Vector3.zero;
+
+        switch (test) {
+
+            case BoundsTest.center:
+                if (bigB.Contains(pos)) {
+                    return (Vector3.zero);
+                }
+
+                if (pos.x > bigB.max.x) {
+                    off.x = pos.x - bigB.max.x;
+                } else if (pos.x < bigB.min.x) {
+                    off.x = pos.x - bigB.min.x;
+                }
+                if (pos.y > bigB.max.y) {
+                    off.y = pos.y - bigB.max.y;
+                } else if (pos.y < bigB.min.y) {
+                    off.y = pos.y - bigB.min.y;
+                }
+                if (pos.z > bigB.max.z) {
+                    off.z = pos.z - bigB.max.z;
+                } else if (pos.z < bigB.min.z) {
+                    off.z = pos.z - bigB.min.z;
+                }
+                return (off);
+
+            case BoundsTest.onScreen:
+                if (bigB.Contains(lilB.min) && bigB.Contains(lilB.max)) {
+                    return (Vector3.zero);
+                }
+
+                if (lilB.max.x > bigB.max.x) {
+                    off.x = lilB.max.x - bigB.max.x;
+                } else if (lilB.min.x < bigB.min.x) {
+                    off.x = lilB.min.x - bigB.min.x;
+                }
+                if (lilB.max.y > bigB.max.y) {
+                    off.y = lilB.max.y - bigB.max.y;
+                } else if (lilB.min.y < bigB.min.y) {
+                    off.y = lilB.min.y - bigB.min.y;
+                }
+                if (lilB.max.z > bigB.max.z) {
+                    off.z = lilB.max.z - bigB.max.z;
+                } else if (lilB.min.z < bigB.min.z) {
+                    off.z = lilB.min.z - bigB.min.z;
+                }
+                return (off);
+
+            case BoundsTest.offScreen:
+                bool cMin = bigB.Contains(lilB.min);
+                bool cMax = bigB.Contains(lilB.max);
+
+                if (cMin || cMax) {
+                    return (Vector3.zero);
+                }
+
+                if (lilB.min.x > bigB.max.x) {
+                    off.x = lilB.min.x - bigB.max.x;
+                } else if (lilB.max.x < bigB.min.x) {
+                    off.x = lilB.max.x - bigB.min.x;
+                }
+                if (lilB.min.y > bigB.max.y) {
+                    off.y = lilB.min.y - bigB.max.y;
+                } else if (lilB.max.y < bigB.min.y) {
+                    off.y = lilB.max.y - bigB.min.y;
+                }
+                if (lilB.min.z > bigB.max.z) {
+                    off.z = lilB.min.z - bigB.max.z;
+                } else if (lilB.max.z < bigB.min.z) {
+                    off.z = lilB.max.z - bigB.min.z;
+                }
+                return (off);
+        }
+        return (Vector3.zero);
     }
 }
