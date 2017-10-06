@@ -7,7 +7,7 @@ public class Hero : MonoBehaviour {
 
     public float speed = 30;
     public float rollMult = -45;
-    public float pitchMult = 30;
+    public float pitchMult = 5;
 
     public float shieldLevel = 1;
 
@@ -26,7 +26,7 @@ public class Hero : MonoBehaviour {
         float yAxis = Input.GetAxis("Vertical");
 
         Vector3 pos = transform.position;
-
+        
         //removes extra speed when moving diagonally
         if ((yAxis > 0 && xAxis > 0) || (yAxis < 0 && xAxis > 0) || (yAxis > 0 && xAxis < 0) || (yAxis < 0 && xAxis < 0)) {
             pos.x += (xAxis * speed * Time.deltaTime) / 1.4f;

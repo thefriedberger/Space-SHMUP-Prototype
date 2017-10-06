@@ -33,9 +33,4 @@ public class Main : MonoBehaviour {
 
         Invoke("SpawnEnemy", enemySpawnRate);
     }
-
-	// Update is called once per frame
-	void Update () {
-		
-	}
 }
