@@ -41,7 +41,7 @@ public class PowerUp : MonoBehaviour {
 	void Update () {
         cube.transform.rotation = Quaternion.Euler(rotPerSecond * Time.time);
 
-        float u = (Time.time - (birthTime + lifeTime) / fadeTime);
+        float u = (Time.time - (birthTime + lifeTime)) / fadeTime;
 
         if (u >= 1) {
             Destroy(this.gameObject);
