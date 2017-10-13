@@ -74,7 +74,7 @@ public class Weapon : MonoBehaviour {
     public void Fire() {
         if (!gameObject.activeInHierarchy) return;
 
-        if(Time.time - lastShot < def.delayBetweenShots) {
+        if (Time.time - lastShot < def.delayBetweenShots) {
             return;
         }
         Projectile p;
