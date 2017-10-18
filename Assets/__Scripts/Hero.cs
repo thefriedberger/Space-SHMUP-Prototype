@@ -21,6 +21,7 @@ public class Hero : MonoBehaviour {
     public bool _____________________;
 
     public Bounds bounds;
+
     public delegate void WeaponFireDelegate();
 
     public WeaponFireDelegate fireDelegate;
@@ -73,19 +74,17 @@ public class Hero : MonoBehaviour {
     void OnTriggerEnter(Collider other) {
         GameObject go = Utils.FindTaggedParent(other.gameObject);
 
-        if (go != null) {
+        if (go != null) 
             if (go == lastTriggerGo) {
                 return;
             }
-            lastTriggerGo = go;
-            if (go.tag == "Enemy") {
-                shieldLevel--;
-                Destroy(go);
-            } else if (go.tag == "PowerUp") {
-                AbsorbPowerUp(go);
-            } else {
-                print("Triggred: " + go.name);
-            }
+
+        lastTriggerGo = go;
+        if (go.tag == "Enemy") {
+            shieldLevel--;
+            Destroy(go);
+        } else if (go.tag == "PowerUp") {
+            AbsorbPowerUp(go);
         } else {
             print("Triggered : " + other.gameObject);
         }
@@ -116,10 +115,10 @@ public class Hero : MonoBehaviour {
                     Weapon w = GetEmptyWeaponSlot();
                     if (w != null) {
                         w.SetType(pu.type);
-                    } else {
-                        ClearWeapons();
-                        weapons[0].SetType(pu.type);
                     }
+                } else {
+                    ClearWeapons();
+                    weapons[0].SetType(pu.type);
                 }
                 break;
         }

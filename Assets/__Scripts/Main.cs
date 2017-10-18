@@ -15,7 +15,7 @@ public class Main : MonoBehaviour {
     public WeaponType[] powerUpFrequency = new WeaponType[] {
                          WeaponType.blaster, WeaponType.blaster,
                          WeaponType.spread,
-                         WeaponType.shield                   };
+                         WeaponType.shield };       
 
     public bool _____________________;
 

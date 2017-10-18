@@ -8,7 +8,7 @@ public class Projectile : MonoBehaviour {
 
     public WeaponType type {
         get {
-            return _type;
+            return (_type);
         }
         set {
             SetType(value);

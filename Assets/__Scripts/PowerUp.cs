@@ -24,7 +24,7 @@ public class PowerUp : MonoBehaviour {
         Vector3 vel = Random.onUnitSphere;
         vel.z = 0;
         vel.Normalize();
-        vel *= Random.Range(rotMinMax.x, driftMinMax.y);
+        vel *= Random.Range(driftMinMax.x, driftMinMax.y);
 
         GetComponent<Rigidbody>().velocity = vel;
 
